@@ -13,21 +13,25 @@ app.use(cors());
 const PORT = process.env.PORT || 5000;
 let users = [];
 
-const addUser = (userId, socketId) => {
-  !users.some((user) => user.userId === userId) &&
-    users.push({ userId, socketId });
+const addUser = (user, socketId) => {
+  !users.some((item) => item.userId === userId) &&
+    users.push({ user, socketId });
 };
 
 const removeUser = (socketId) => {
-  users = users.filter((user) => user.socketId !== socketId);
+  users=users.map(user=>{
+    if(item.socketId==socketId){
+      return({...user,online:false,timeoff:new Date().toString()})
+    }
+    return({...user})
+  })
 };
-
 
 io.on('connection', socket => {
   console.log("New client connected" + socket.id); 
     
-  socket.on("addUser", (userId) => {
-    addUser(userId, socket.id);
+  socket.on("addUser", (user) => {
+    addUser(user, socket.id);
     io.emit("getUsers", users);
   });
   socket.on("broadcaster", () => {
@@ -36,7 +40,10 @@ io.on('connection', socket => {
   });
   
   socket.on("sendData", (data) => {
-    io.emit("message", {data});
+    io.emit("message", data);
+  })
+socket.on("sendNotifi", (listusers) => {
+    io.emit("notifi", listusers);
   })
   socket.on("offer", (id, message) => {
     socket.to(id).emit("offer", socket.id, message);
