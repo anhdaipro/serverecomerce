@@ -14,13 +14,13 @@ const PORT = process.env.PORT || 5000;
 let users = [];
 
 const addUser = (user, socketId) => {
-  !users.some((item) => item.userId === userId) &&
+  !users.some((item) => item.user.id === user.id) &&
     users.push({ user, socketId });
 };
 
 const removeUser = (socketId) => {
   users=users.map(user=>{
-    if(item.socketId==socketId){
+    if(user.socketId==socketId){
       return({...user,online:false,timeoff:new Date().toString()})
     }
     return({...user})
