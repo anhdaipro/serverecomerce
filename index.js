@@ -11,20 +11,31 @@ const io = socket(http, {
 
 app.use(cors());
 const PORT = process.env.PORT || 5000;
+let users = [];
+
+const addUser = (userId, socketId) => {
+  !users.some((user) => user.userId === userId) &&
+    users.push({ userId, socketId });
+};
+
+const removeUser = (socketId) => {
+  users = users.filter((user) => user.socketId !== socketId);
+};
+
+
 io.on('connection', socket => {
   console.log("New client connected" + socket.id); 
-    socket.on('stream', data=> {
-    // send stream back to room
-      socket.broadcast.emit('live',{data});
+    
+  socket.on("addUser", (userId) => {
+    addUser(userId, socket.id);
   });
   socket.on("broadcaster", () => {
     broadcaster = socket.id;
     socket.broadcast.emit("broadcaster");
   });
-  socket.on("watcher", () => {
-    socket.broadcast.emit("watch", socket.id);
-  });
+  
   socket.on("sendData", (data) => {
+
     io.emit("message", {data});
   })
   socket.on("offer", (id, message) => {
@@ -37,7 +48,8 @@ io.on('connection', socket => {
     socket.to(id).emit("candidate", socket.id, message);
   });
   socket.on("disconnect", () => {
-    console.log("Client disconnected"); // Khi client disconnect thì log ra terminal.
+    removeUser(socket.id);
+    
   });
 })
 
