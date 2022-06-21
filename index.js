@@ -17,7 +17,7 @@ const addUser = (user, socketId) => {
   !users.some((item) => item.user.id === user.id) &&
     users.push({ user, socketId });
 users=users.map(item=>{
-    if(item.socketId==socketId){
+    if(item.user.id==user.id){
       return({...item,user:{...item.user,online:true}})
     }
     return({...item})
