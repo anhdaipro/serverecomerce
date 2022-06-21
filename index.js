@@ -27,7 +27,7 @@ users=users.map(item=>{
 const removeUser = (socketId) => {
   users=users.map(item=>{
     if(item.socketId==socketId){
-      return({...item,user:{...item.user,online:false,timeoff:new Date().toString()}})
+      return({...item,user:{...item.user,online:false,timeoff:new Date()}})
     }
     return({...item})
   })
