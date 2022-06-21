@@ -13,10 +13,9 @@ app.use(cors());
 const PORT = process.env.PORT || 5000;
 let users = [];
 
-const addUser = (user, socketId) => {
-  !users.some((item) => item.user.id === user.id) &&
-    users.push({ user, socketId });
-
+const addUser = (userId, socketId) => {
+  !users.some((user) => user.userId === userId) &&
+    users.push({ userId, socketId });
 };
 
 const removeUser = (socketId) => {
@@ -26,8 +25,8 @@ const removeUser = (socketId) => {
 io.on('connection', socket => {
   console.log("New client connected" + socket.id); 
     
-  socket.on("addUser", (user) => {
-    addUser(user, socket.id);
+  socket.on("addUser", (userId) => {
+    addUser(userId, socket.id);
     io.emit("getUsers", users);
   });
   socket.on("broadcaster", () => {
