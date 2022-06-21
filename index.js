@@ -14,12 +14,6 @@ const PORT = process.env.PORT || 5000;
 let users = [];
 
 const addUser = (user, socketId) => {
-users=users.map(item=>{
-    if(item.socketId==socketId){
-      return({...item,user:{...item.user,online:false,timeoff:new Date()}})
-    }
-    return({...item})
-  })
   !users.some((item) => item.user.id === user.id) &&
     users.push({ user, socketId });
 
