@@ -22,21 +22,11 @@ users=users.map(item=>{
   })
   !users.some((item) => item.user.id === user.id) &&
     users.push({ user, socketId });
-users.map(item=>{
-    if(item.user.id==user.id){
-      return({...item,user:{...item.user,online:true}})
-    }
-    return({...item})
-  })
+
 };
 
 const removeUser = (socketId) => {
-  users=users.map(item=>{
-    if(item.socketId==socketId){
-      return({...item,user:{...item.user,online:false,timeoff:new Date()}})
-    }
-    return({...item})
-  })
+  users = users.filter((user) => user.socketId !== socketId);
 };
 
 io.on('connection', socket => {
