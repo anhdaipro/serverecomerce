@@ -19,9 +19,9 @@ const addUser = (user, socketId) => {
 };
 
 const removeUser = (socketId) => {
-  users=users.map(user=>{
-    if(user.socketId==socketId){
-      return({...user,online:false,timeoff:new Date().toString()})
+  users=users.map(item=>{
+    if(item.socketId==socketId){
+      return({...item,user:{...item.user,online:false,timeoff:new Date().toString()}})
     }
     return({...user})
   })
