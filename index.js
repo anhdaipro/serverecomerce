@@ -40,6 +40,9 @@ io.on('connection', socket => {
 socket.on("addComment",(data)=>{
 io.emit("comment",data)
 })
+socket.on("actionPost",(data)=>{
+io.emit("post",data)
+})
 socket.on("sendNotifi", (listusers) => {
     io.emit("notifi", listusers);
   })
