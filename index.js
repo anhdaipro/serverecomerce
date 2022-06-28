@@ -37,6 +37,9 @@ io.on('connection', socket => {
   socket.on("sendData", (data) => {
     io.emit("message", data);
   })
+socket.on("addComment",data)=>{
+io.emit("comment",data)
+})
 socket.on("sendNotifi", (listusers) => {
     io.emit("notifi", listusers);
   })
