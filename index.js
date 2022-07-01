@@ -37,12 +37,7 @@ io.on('connection', socket => {
   socket.on("sendData", (data) => {
     io.emit("message", data);
   })
-socket.on("sendImage", (data) => {
-    io.emit("message", data);
-  })
-socket.on("sendFile", (data) => {
-    io.emit("message", data);
-  })
+
 socket.on("addComment",(data)=>{
 io.emit("comment",data)
 })
