@@ -34,9 +34,16 @@ io.on('connection', socket => {
     socket.broadcast.emit("broadcaster");
   });
   
-  socket.on("sendData", (data) => {
+  socket.on("sendImage", (data) => {
+    io.emit("messageimage", data);
+  })
+socket.on("sendFile", (data) => {
+    io.emit("messagefile", data);
+  })
+socket.on("sendData", (data) => {
     io.emit("message", data);
   })
+
 
 socket.on("addComment",(data)=>{
 io.emit("comment",data)
