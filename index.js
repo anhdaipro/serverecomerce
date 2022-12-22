@@ -33,7 +33,7 @@ const addUser = (userId, socketId) => {
 const removeUser = (socketId) => {
   const userupdate=users.map(item=>{
     if(item.socketId!==socketId){
-      return({...item,is_online:dayjs().format("YYYY-MM-DD HH:mm"),online:false})
+      return({...item,is_online:dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),online:false})
     }
     return({...item})
   })
