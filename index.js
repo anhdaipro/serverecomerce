@@ -19,9 +19,9 @@ const addUser = (userId, socketId) => {
   if(useronline){
     const userupdate=users.map(item=>{
       if(item.socketId===socketId){
-        return({...item,online:true})
+        return{...item,online:true}
       }
-      return({...item})
+      return{...item}
     })
     users=userupdate
     
@@ -34,9 +34,9 @@ const addUser = (userId, socketId) => {
 const removeUser = (socketId) => {
   const userupdate=users.map(item=>{
     if(item.socketId!==socketId){
-      return({...item,is_online:dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),online:false})
+      return{...item,is_online:dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),online:false}
     }
-    return({...item})
+    return{...item}
   })
   users=userupdate
   
