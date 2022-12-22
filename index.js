@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 5000;
 let users = [];
 
 const addUser = (userId, socketId) => {
-  const useronline=users.find(user=>user.socketId===socketId)
+  const useronline=users.find(user=>user.userId===userId)
   if(useronline){
     const userupdate=users.map(item=>{
       if(item.socketId===socketId){
