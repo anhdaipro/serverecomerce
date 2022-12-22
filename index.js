@@ -1,7 +1,6 @@
 const app = require('express')()
 const http = require('http').createServer(app)
 const socket = require("socket.io");
-const dayjs=require("dayjs")
 const cors = require("cors");
 const io = socket(http, {
   cors: {
@@ -15,31 +14,12 @@ const PORT = process.env.PORT || 5000;
 let users = [];
 
 const addUser = (userId, socketId) => {
-  const useronline=users.find(user=>user.userId===userId)
-  if(useronline){
-    const userupdate=users.map(item=>{
-      if(item.userId===userId){
-        return{...item,online:true}
-      }
-      return{...item}
-    })
-    users=userupdate
-    
-  }
-  else{
-    users.push({ userId, socketId,online:true });
-  }
+  !users.some((user) => user.userId === userId) &&
+    users.push({ userId, socketId });
 };
 
 const removeUser = (socketId) => {
-  const userupdate=users.map(item=>{
-    if(item.socketId===socketId){
-      return{...item,is_online:dayjs().format("YYYY-MM-DDTHH:mm:ssZ"),online:false}
-    }
-    return{...item}
-  })
-  users=userupdate
-  
+  users = users.filter((user) => user.socketId !== socketId);
 };
 
 io.on('connection', socket => {
