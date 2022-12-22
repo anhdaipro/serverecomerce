@@ -18,7 +18,7 @@ const addUser = (userId, socketId) => {
   const useronline=users.find(user=>user.userId===userId)
   if(useronline){
     const userupdate=users.map(item=>{
-      if(item.socketId===socketId){
+      if(item.userId===userId){
         return{...item,online:true}
       }
       return{...item}
